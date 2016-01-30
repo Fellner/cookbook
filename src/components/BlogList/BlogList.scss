@@ -1,0 +1,88 @@
+@import "~styles/colors";
+@import "~styles/fonts";
+
+.BlogList {
+
+  &__item {
+    margin-bottom: 30px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 1px -2px rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    background-color: $white;
+    text-decoration: none;
+    color: $color-text-body;
+    display: block;
+
+      &-text {
+      padding: 20px 30px;
+
+      &title {
+        font-family: $secondary-font;
+        margin-top: 20px;
+        margin-bottom: 8px;
+      }
+
+      &postedon {
+        font-size: 14px;
+        text-transform: uppercase;
+        font-family: $secondary-font;
+        letter-spacing: 1px;
+        color: lighten($grey-dark700, 40%);
+        margin-bottom: 15px;
+      }
+    }
+
+      &__picture {
+        position: relative;
+
+
+      &::before {
+          display: block;
+          position: absolute;
+          left: 0;
+          bottom: 0px;
+          right: 0;
+          height: 19px;
+          content: "";
+          z-index: 5;
+          background-image: url("./images/spikes.svg");
+          background-position: left bottom;
+          background-repeat: repeat-x;
+        }
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+
+        &tags {
+          position: absolute;
+          bottom: 30px;
+          left: 30px;
+          width: 100%;
+        }
+
+        &tag {
+          color: $white;
+          background-color: $primary-color;
+          text-transform: uppercase;
+          font-weight: 600;
+          font-size: 14px;
+          font-family: $secondary-font;
+          border-radius: 3px;
+          margin-right: 10px;
+          padding: 5px 8px;
+          letter-spacing: 1px;
+        }
+
+        &time {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          color: $white;
+
+          .Icon {
+            fill: $white;
+          }
+        }
+      }
+  }
+}
