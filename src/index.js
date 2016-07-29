@@ -12,6 +12,8 @@ import routes from './routes';
  * Client render (browser context)
  */
 if (EnvUtils.isClient()) {
+  require('./installServiceWorker.js');
+
   // `useStandardScroll` attempts to imitate native browser scroll behavior by
   // recording updates to the window scroll position, then restoring the
   // previous scroll position upon a POP transition. PUSH and REPLACE

@@ -9,14 +9,17 @@
 
 require('babel-register')();
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const glob = require('glob');
+const OnBuildPlugin = require('on-build-webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 
 const SHARED_AUTOPREFIXER_CONFIG = '{browsers:["> 1% in AT", "last 2 version", "Firefox ESR"]}';
 const SHARED_BABEL_PRESETS = ['react', 'es2015'];
 const SHARED_BABEL_PLUGINS = ['transform-class-properties'];
+const PUBLIC_PATH_PROD = path.join(__dirname, 'dist');
 
 // Keep this in sync with `src/routes.js`.
 // Recipes posts are dynamically added based on `src/recipes/index`;
@@ -24,8 +27,29 @@ const BASE_PATHS = [
   '/',
   '/home/',
   '/about/',
+  '/recipe/',
   '/imprint/'
 ];
+
+// Generates the service worker cache.
+// The file will be written as ./static/precache.json
+function generateServiceWorkerCache(stats) {
+  fs.writeFileSync(
+    path.join(PUBLIC_PATH_PROD, 'precache.json'),
+    JSON.stringify(Object.keys(stats.compilation.assets))
+  );
+}
+
+// Copies all files from static/ to the public path
+function copyStaticAssets() {
+  glob.sync('static/**/*.*').forEach(file => {
+    let lastSlashI = file.lastIndexOf('/');
+    let name = file.substr(lastSlashI);
+    fs.createReadStream(file)
+      .pipe(fs.createWriteStream(path.join(PUBLIC_PATH_PROD, name)));
+  });
+  console.info('\nCopied assets from /static/\n');
+}
 
 /**
  * Shared config
@@ -114,14 +138,13 @@ if (process.env.NODE_ENV === 'production') {
     let name = file.substr(lastSlashI);
     if (name !== '/index.js') paths.push('/recipe' + name.substr(0, name.length - 3));
   });
-  console.log(paths);
 
   config.entry = {
     'main': './src/index'
   };
 
   config.output = {
-    path: path.join(__dirname, 'dist'),
+    path: PUBLIC_PATH_PROD,
     filename: 'main-[hash].js',
     libraryTarget: 'umd',
     publicPath: '/'
@@ -131,7 +154,9 @@ if (process.env.NODE_ENV === 'production') {
     new ExtractTextPlugin('main-[hash].css', {allChunks: true}),
     new webpack.optimize.UglifyJsPlugin({compressor: { warnings: false}}),
     new webpack.optimize.DedupePlugin(),
-    new StaticSiteGeneratorPlugin('main', paths)
+    new StaticSiteGeneratorPlugin('main', paths),
+    new OnBuildPlugin(generateServiceWorkerCache),
+    new OnBuildPlugin(copyStaticAssets)
   );
 
   config.module.loaders.push({

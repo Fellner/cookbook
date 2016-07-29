@@ -20,6 +20,10 @@ export default class Base extends Component {
           {assets.styles.map(style =>
             <link key={style} rel="stylesheet" href={style} />
           )}
+          <link rel="icon" type="image/png" sizes="24x23" href="/favicon.png" />
+          <meta name="theme-color" content="#e42166" />
+          <meta name="background-color" content="#e42166" />
+          <link rel="manifest" href="/manifest.json" />
         </head>
         <body>
           <div id="root" dangerouslySetInnerHTML={{__html: html}} />

@@ -18,7 +18,7 @@ const app = express();
 const compiler = webpack(config);
 
 // Serve files from /static
-app.use('/static', express.static('static'));
+app.use(express.static('static'));
 
 // Enable hot reloading of files.
 app.use(require('webpack-dev-middleware')(compiler, {
