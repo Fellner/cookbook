@@ -22,10 +22,6 @@ let menu = [{
     }
 ]
 }, {
-  name: 'About me',
-  icon: 'about',
-  url: '/about'
-}, {
   name: 'Imprint',
   icon: 'imprint',
   url: '/imprint'

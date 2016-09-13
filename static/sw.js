@@ -1,8 +1,7 @@
 importScripts('cache-polyfill.js');
 
-var CACHE_NAME = 'zuziwutz';
+var CACHE_NAME = 'cookbook';
 var PRECACHE_FILE = '/precache.json';
-
 
 self.addEventListener('install', function(event) {
   event.waitUntil(

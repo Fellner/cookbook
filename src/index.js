@@ -23,7 +23,7 @@ if (EnvUtils.isClient()) {
 
   // Google Analytics
   let analytics = Analytics();
-  analytics('create', 'UA-39940228-1', 'auto');
+  analytics('create', 'UA-39940228-2', 'auto');
   history.listen(location => {
     analytics('send', 'pageview', {page: location.pathname});
   });

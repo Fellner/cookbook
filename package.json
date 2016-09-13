@@ -9,9 +9,9 @@
     "clean": "rimraf dist",
     "build": "npm run lint && npm run clean && npm run build:webpack",
     "build:webpack": "NODE_ENV=production webpack --config webpack.config.js",
-    "deploy:staging": "surge -p dist -d barbarafellner.surge.sh",
-    "yolo": "npm run build && npm run deploy:staging",
-    "deploy:production": "surge -p dist -d barbarafellner.at"
+    "deploy:staging": "firebase deploy",
+    "yolo": "npm run build:webpack && npm run deploy:staging",
+    "deploy:production": "firebase deploy"
   },
   "author": "Barbara Fellner <me@barbarafellner.at>",
   "devDependencies": {

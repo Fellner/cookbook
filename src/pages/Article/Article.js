@@ -34,6 +34,35 @@ export default class Article extends Component {
               {article.content}
           </div>
         </ContentPanel>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html:`{  "@context": "http://schema.org",
+              "@type": "Recipe",
+              "author": "Barbara Fellner",
+              "cookTime": "PT15M",
+              "datePublished": "2016-07-08",
+              "description": "This classic banana bread recipe comes from my mom -- the walnuts add a nice texture and flavor to the banana bread.",
+              "image": "https://barbarafellner.at${article.pictureS}",
+              "recipeIngredient": ${JSON.stringify(article.ingredients)},
+              "interactionStatistic": {
+                "@type": "InteractionCounter",
+                "interactionType": "http://schema.org/Comment",
+                "userInteractionCount": "140"
+              },
+              "name": "${article.name}",
+              "nutrition": {
+                "@type": "NutritionInformation",
+                "calories": "${article.calories}",
+                "fatContent": "9 grams fat"
+              },
+              "prepTime": "PT15M",
+              "recipeInstructions": "${article.name}",
+              "recipeYield": "1 Lasagne",
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "bestRating": "100",
+                "ratingCount": "24",
+                "ratingValue": "87"
+              }
+            }`}}></script>
       </div>
     );
   }

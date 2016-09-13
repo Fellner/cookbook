@@ -8,7 +8,6 @@ import {App, About, Article, Home, Imprint} from 'pages';
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Home} />
-    <Route path="about" component={About} />
     <Route path="imprint" component={Imprint} />
     <Route path="recipe/:slug" component={Article} />
     <Route path="*" component={Home} />
